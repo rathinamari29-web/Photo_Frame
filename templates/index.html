@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="main">
+        <div class="box">
+            <h1>Frame your memories</h1>
+            <h2>Welcome to the photo frame</h2>
+            <div class="list">
+                <label>Drag and drop <br>your Image here👇</label><br>
+                <input type="file" id="upload" accept="image/*">
+            </div>
+        </div>
+
+        <div class="frame">
+            <h1>Select the frame</h1>
+            <ol>
+                <li>
+                    <label>
+                        <input type="radio" name="frame" value="{{ url_for('static', filename='frame.jpeg') }}" checked>
+                        <img src="{{ url_for('static', filename='frame.jpeg') }}">
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="frame" value="{{ url_for('static', filename='frame2.jpeg') }}">
+                        <img src="{{ url_for('static', filename='frame2.jpeg') }}">
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="frame" value="{{ url_for('static', filename='frame3.jpeg') }}">
+                        <img src="{{ url_for('static', filename='frame3.jpeg') }}">
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="frame" value="{{ url_for('static', filename='frame4.jpeg') }}">
+                        <img src="{{ url_for('static', filename='frame4.jpeg') }}">
+                    </label>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="result">
+        <h1>Your framed photo</h1>
+        <div class="preview">
+            <img id="photo" class="photo" alt="">
+            <img id="frameImg" class="frame-overlay" alt="">
+        </div>
+    </div>
+
+    <script>
+        const upload = document.getElementById('upload');
+        const photo = document.getElementById('photo');
+        const frameImg = document.getElementById('frameImg');
+
+        function showFrame() {
+            const chosen = document.querySelector('input[name="frame"]:checked');
+            if (chosen) frameImg.src = chosen.value;
+        }
+
+        upload.addEventListener('change', e => {
+            const file = e.target.files[0];
+            if (file) photo.src = URL.createObjectURL(file);
+        });
+        document.querySelectorAll('input[name="frame"]').forEach(r =>
+            r.addEventListener('change', showFrame));
+
+        showFrame();   
+    </script>
+</body>
+
+</html>
